@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using static ContentDialogHelper;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -34,19 +35,75 @@ namespace WebcamViewerUWP
             // Configuration test:
             var created = await config_manager.CreateConfigFile("test", true);
             var parsed = await config_manager.ReadConfigFile("test");
+
+            // Load Home:
+            SwitchToPage(new Home.HomePage());
         }
 
-        private async void main_navView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        /// -------------- VIEW MANAGEMENT -------------- ///
+
+        public void SwitchToPage(Page page)
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.Title = "Navigation test";
+            Frame target_frame = GetLoadedFrameForPage(page);
+            if (target_frame == null) target_frame = CreateFrameForPage(page);
 
-            var item = (Microsoft.UI.Xaml.Controls.NavigationViewItem)args.InvokedItemContainer;
+            RequestFrameVisibility(target_frame);
+        }
+        public static bool VIEWMANAGER_AllowReflectionPageCreation = false;
+        public void SwitchToPage(string page_name)
+        {
+            Frame target_frame = GetLoadedFrameForPage(page_name);
+            if (target_frame == null)
+            {
+                if (VIEWMANAGER_AllowReflectionPageCreation) { /* tba */ }
+                else TextContentDialog("Could not switch to page", "This page hasn't been loaded yet.\nName: %".ParseArgs(page_name));
+            }
+        }
 
-            dialog.Content = string.Format("You pressed \"{0}\", with a tag of '{1}'.", item.Content.ToString(), item.Tag.ToString());
-            dialog.PrimaryButtonText = "OK";
+        public List<Page> loaded_pages = new List<Page>();
+        public Frame CreateFrameForPage(Page page)
+        {
+            loaded_pages.Add(page);
+            Frame frame = new Frame() { Content = page, Name = page.Name };
+            AddPageFrame(frame);
 
-            await dialog.ShowAsync();
+            return frame;
+        }
+
+        public Frame GetLoadedFrameForPage(Page page) => GetLoadedFrameForPage(page.Name);
+        public Frame GetLoadedFrameForPage(string page_name)
+        {
+            // TODO: Multiple instances support!
+            return loaded_frames.Where(x => x.Name == page_name).FirstOrDefault();
+        }
+
+        public List<Frame> loaded_frames = new List<Frame>();
+        public void AddPageFrame(Frame frame, bool allow_multiple_instances = false)
+        {
+            if (!allow_multiple_instances && loaded_frames.Any(x => x.Name == frame.Name))
+            {
+                TextContentDialog("This frame is already loaded.", "You cannot add multiple instances of this frame.");
+                return;
+            }
+
+            frame.Visibility = Visibility.Collapsed;
+
+            loaded_frames.Add(frame);
+            frame_container.Children.Add(frame);
+        }
+
+        public void RequestFrameVisibility(Page page) => RequestFrameVisibility(page.Name);
+        public void RequestFrameVisibility(string page_name)
+        {
+            Frame target_frame = loaded_frames.Where(x => x.Name == page_name).FirstOrDefault();
+            RequestFrameVisibility(target_frame);
+        }
+        public void RequestFrameVisibility(Frame frame)
+        {
+            // Hide all other frames: | TODO: animations!!!
+            foreach (Frame f in loaded_frames) f.Visibility = Visibility.Collapsed;
+
+            frame.Visibility = Visibility.Visible;
         }
     }
 }

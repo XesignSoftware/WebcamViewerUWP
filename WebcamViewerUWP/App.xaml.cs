@@ -5,8 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -71,6 +74,23 @@ namespace WebcamViewerUWP
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            SetupTitlebar();
+        }
+
+        void SetupTitlebar()
+        {
+            // Extending:
+            var core_titlebar = CoreApplication.GetCurrentView().TitleBar;
+            core_titlebar.ExtendViewIntoTitleBar = true;
+
+
+            // Window control button transparency:
+            var titlebar = ApplicationView.GetForCurrentView().TitleBar;
+            titlebar.ButtonBackgroundColor = Colors.Transparent;
+            titlebar.ButtonHoverBackgroundColor = new Color() { R = 0, G = 0, B = 0, A = 40 };
+            titlebar.ButtonPressedBackgroundColor = Colors.Transparent;
+            titlebar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
 
         /// <summary>

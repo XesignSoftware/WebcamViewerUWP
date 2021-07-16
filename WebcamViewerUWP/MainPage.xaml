@@ -7,24 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    winui:BackdropMaterial.ApplyToRootOrPageBackground="True"
     Loaded="Page_Loaded">
 
     <Grid>
 
-        <winui:NavigationView x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
-                              ItemInvoked="main_navView_ItemInvoked">
-
-            <winui:NavigationView.MenuItems>
-                <winui:NavigationViewItem Content="Test #0" Tag="0" />
-                <winui:NavigationViewItem Content="Test #1" Tag="1" />
-            </winui:NavigationView.MenuItems>
-
-            <winui:NavigationView.Content>
-                <TextBlock Text="Hello world!" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </winui:NavigationView.Content>
-
-        </winui:NavigationView>
+        <Grid x:Name="frame_container"/>
 
     </Grid>
 </Page>
