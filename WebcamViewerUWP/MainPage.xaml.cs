@@ -26,5 +26,27 @@ namespace WebcamViewerUWP
         {
             this.InitializeComponent();
         }
+
+        ConfigurationManager config_manager = new ConfigurationManager();
+
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Configuration test:
+            var created = await config_manager.CreateConfigFile("test", true);
+            var parsed = await config_manager.ReadConfigFile("test");
+        }
+
+        private async void main_navView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "Navigation test";
+
+            var item = (Microsoft.UI.Xaml.Controls.NavigationViewItem)args.InvokedItemContainer;
+
+            dialog.Content = string.Format("You pressed \"{0}\", with a tag of '{1}'.", item.Content.ToString(), item.Tag.ToString());
+            dialog.PrimaryButtonText = "OK";
+
+            await dialog.ShowAsync();
+        }
     }
 }
