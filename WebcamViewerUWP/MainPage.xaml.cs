@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,6 +29,7 @@ namespace WebcamViewerUWP
         public MainPage()
         {
             this.InitializeComponent();
+            SetupTitlebar();
         }
 
         ConfigurationManager config_manager = new ConfigurationManager();
@@ -38,6 +42,23 @@ namespace WebcamViewerUWP
 
             // Load Home:
             SwitchToPage(new Home.HomePage());
+        }
+
+        /// Titlebar: ///
+        void SetupTitlebar()
+        {
+            // Extending:
+            var core_titlebar = CoreApplication.GetCurrentView().TitleBar;
+            core_titlebar.ExtendViewIntoTitleBar = true;
+            core_titlebar.LayoutMetricsChanged += (s, args) =>
+                titlebar_rowdef.Height = new GridLength(s.Height, GridUnitType.Pixel);
+
+            // Window control button transparency:
+            var titlebar = ApplicationView.GetForCurrentView().TitleBar;
+            titlebar.ButtonBackgroundColor = Colors.Transparent;
+            titlebar.ButtonHoverBackgroundColor = new Color() { R = 0, G = 0, B = 0, A = 40 };
+            titlebar.ButtonPressedBackgroundColor = Colors.Transparent;
+            titlebar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
 
         /// -------------- VIEW MANAGEMENT -------------- ///
@@ -56,7 +77,7 @@ namespace WebcamViewerUWP
             if (target_frame == null)
             {
                 if (VIEWMANAGER_AllowReflectionPageCreation) { /* tba */ }
-                else TextContentDialog("Could not switch to page", "This page hasn't been loaded yet.\nName: %".ParseArgs(page_name));
+                else TextContentDialog("Could not switch to page", "This page hasn't been loaded yet.\nName: %".Parse(page_name));
             }
         }
 

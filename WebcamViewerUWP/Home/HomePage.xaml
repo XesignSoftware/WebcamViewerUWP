@@ -1,31 +1,35 @@
-﻿<Page
-    x:Class="WebcamViewerUWP.Home.HomePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WebcamViewerUWP.Home"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d"
-    Background="{ThemeResource AppBarBackgroundThemeBrush}"
-    winui:BackdropMaterial.ApplyToRootOrPageBackground="True">
+﻿<Page x:Name="main"
+      x:Class="WebcamViewerUWP.Home.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:WebcamViewerUWP.Home"
+      xmlns:model="using:WebcamViewerUWP.Models"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      mc:Ignorable="d" Background="Transparent">
 
-    <winui:NavigationView x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
-                              ItemInvoked="main_navView_ItemInvoked">
+    <muxc:NavigationView x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
+                         ItemInvoked="main_navView_ItemInvoked" MenuItemsSource="{x:Bind Path=ViewModel.Cameras}" >
 
-        <winui:NavigationView.MenuItems>
-            <winui:NavigationViewItem Content="Test #0" Tag="0" />
-            <winui:NavigationViewItem Content="Test #1" Tag="1" />
-        </winui:NavigationView.MenuItems>
+        <muxc:NavigationView.MenuItemTemplate>
+            <DataTemplate x:DataType="model:ImageCamera">
+                <StackPanel>
+                    <TextBlock Text="{x:Bind Path=Name, Mode=OneWay}" />
+                    <TextBlock Text="{x:Bind Path=Type, Mode=OneWay}" FontSize="10" Foreground="{ThemeResource SystemColorGrayTextColor}" />
+                </StackPanel>
+            </DataTemplate>
+        </muxc:NavigationView.MenuItemTemplate>
 
-        <winui:NavigationView.Content>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <winui:ProgressRing Background="{ThemeResource ProgressBarBackgroundThemeBrush}" Margin="14" />
-                <TextBlock Text="Home page!" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            </StackPanel>
-        </winui:NavigationView.Content>
+        <muxc:NavigationView.Content>
+            <Grid>
+                <Image x:Name="image" />
+                <muxc:ProgressRing x:Name="image_progressRing" x:Load="{x:Bind Path=ViewModel.IsLoading, Mode=OneWay}"
+                                   Background="{ThemeResource SystemControlBackgroundListLowBrush}" />
+            </Grid>
+        </muxc:NavigationView.Content>
 
-    </winui:NavigationView>
+    </muxc:NavigationView>
 
     <!-- <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock FontSize="32">HomePage</TextBlock>

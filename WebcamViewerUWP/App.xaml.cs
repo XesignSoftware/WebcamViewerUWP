@@ -74,23 +74,6 @@ namespace WebcamViewerUWP
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-
-            SetupTitlebar();
-        }
-
-        void SetupTitlebar()
-        {
-            // Extending:
-            var core_titlebar = CoreApplication.GetCurrentView().TitleBar;
-            core_titlebar.ExtendViewIntoTitleBar = true;
-
-
-            // Window control button transparency:
-            var titlebar = ApplicationView.GetForCurrentView().TitleBar;
-            titlebar.ButtonBackgroundColor = Colors.Transparent;
-            titlebar.ButtonHoverBackgroundColor = new Color() { R = 0, G = 0, B = 0, A = 40 };
-            titlebar.ButtonPressedBackgroundColor = Colors.Transparent;
-            titlebar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
 
         /// <summary>
