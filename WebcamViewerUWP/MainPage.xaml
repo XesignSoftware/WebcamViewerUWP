@@ -10,21 +10,48 @@
     winui:BackdropMaterial.ApplyToRootOrPageBackground="True"
     Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <Storyboard x:Name="settings_in">
+            <DoubleAnimation To="1" Duration="0:0:0.3" Storyboard.TargetName="tb_settings_backbutton" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation To="1" Duration="0:0:0.3" Storyboard.TargetName="tb_settings_text" Storyboard.TargetProperty="Opacity" />
+        </Storyboard>
+        <Storyboard x:Name="settings_out">
+            <DoubleAnimation To="0" Duration="0:0:0.3" Storyboard.TargetName="tb_settings_backbutton" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation To="0" Duration="0:0:0.3" Storyboard.TargetName="tb_settings_text" Storyboard.TargetProperty="Opacity" />
+        </Storyboard>
+    </Page.Resources>
+    
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="titlebar_rowdef" Height="Auto" d:Height="32" />
+            <RowDefinition x:Name="rowdef_titlebar" Height="Auto" d:Height="32" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid x:Name="frame_container" Grid.Row="0" Grid.RowSpan="2"/>
 
         <!-- Titlebar -->
-        <Grid>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="14,0">
+        <Grid x:Name="titlebar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="coldef_sysright" Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Rectangle x:Name="titlebar_draggable" Fill="Transparent"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="0,0">
+                <StackPanel.ChildrenTransitions>
+                    <RepositionThemeTransition />
+                </StackPanel.ChildrenTransitions>
+
+                <Button x:Name="tb_settings_backbutton" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="tb_settings_backbutton_Click"/>
+                
                 <TextBlock Text="&#xe156;" FontFamily="Segoe MDL2 Assets"
-                           VerticalAlignment="Center" Padding="0,0,12,0"/>
-                <TextBlock Text="Webcam Viewer" VerticalAlignment="Center" FontSize="12" />
+                           VerticalAlignment="Center" Padding="12,0,12,0"/>
+                <TextBlock Text="Webcam Viewer" FontSize="12" VerticalAlignment="Center" Margin="0,0,8,0" />
+
+                <TextBlock x:Name="tb_settings_text" Text="> Settings" FontSize="12" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" />
             </StackPanel>
         </Grid>
 

@@ -22,7 +22,12 @@
 
     <Grid>
 
-        <muxc:NavigationView Style="{StaticResource HomeNavigationViewStyle}" x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="rowdef_titlebar" d:Height="35" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <muxc:NavigationView x:Name="main_navView" Grid.Row="1" Style="{StaticResource HomeNavigationViewStyle}" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
                              ItemInvoked="main_navView_ItemInvoked" MenuItemsSource="{x:Bind Path=ViewModel.Cameras}">
 
             <muxc:NavigationView.MenuItemTemplate>
@@ -50,6 +55,8 @@
             </muxc:NavigationView.Content>
 
         </muxc:NavigationView>
+
+        
 
     </Grid>
 

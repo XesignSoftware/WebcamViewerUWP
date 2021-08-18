@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebcamViewerUWP.Models;
 
-namespace WebcamViewerUWP.Models
+public static class AppState
 {
-    public static class AppState
+    static AppState()
     {
-        static AppState()
-        {
-            int i = -1;
-            Cameras = new List<ImageCamera>()
+        int i = -1;
+        Cameras = new List<ImageCamera>()
             {
                 new ImageCamera("Test 1", "http://gw.msumi.sk:8001/jpg/1/image.jpg",    ++i),
                 new ImageCamera("Test 2", "http://gecom.sk/img/kam-autobuska-orig.jpg", ++i),
                 new ImageCamera("Test 3", "http://funsat.sk/meteo/webcam/funsat2.jpg" , ++i),
             };
-        }
-
-        public static List<ImageCamera> Cameras { get; set; }
     }
+
+    public static double TitlebarHeight { get; set; }
+
+    public static List<ImageCamera> Cameras { get; set; }
 }

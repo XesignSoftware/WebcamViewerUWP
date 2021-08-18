@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="ContentDialogHelper.cs" />
+    <Compile Include="Extensions\BoolExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Views\Home\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>

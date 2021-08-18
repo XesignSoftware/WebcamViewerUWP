@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -36,6 +37,8 @@ namespace WebcamViewerUWP
             var created = await config_manager.CreateConfigFile("test", true);
             var parsed = await config_manager.ReadConfigFile("test");
 
+            ControlSettingsStuff(false);
+
             // Load Home:
             SwitchToPage(typeof(Views.Home.HomeView));
         }
@@ -47,15 +50,31 @@ namespace WebcamViewerUWP
             var core_titlebar = CoreApplication.GetCurrentView().TitleBar;
             core_titlebar.ExtendViewIntoTitleBar = true;
             core_titlebar.LayoutMetricsChanged += (s, args) =>
-                titlebar_rowdef.Height = new GridLength(s.Height, GridUnitType.Pixel);
+            {
+                AppState.TitlebarHeight = s.Height;
+                rowdef_titlebar.Height = new GridLength(s.Height);
+                coldef_sysright.Width = new GridLength(core_titlebar.SystemOverlayRightInset);
+            };
+            Window.Current.SetTitleBar(titlebar_draggable);
 
             // Window control button transparency:
-            var titlebar = ApplicationView.GetForCurrentView().TitleBar;
-            titlebar.ButtonBackgroundColor = Colors.Transparent;
-            titlebar.ButtonHoverBackgroundColor = new Color() { R = 0, G = 0, B = 0, A = 40 };
-            titlebar.ButtonPressedBackgroundColor = Colors.Transparent;
-            titlebar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            var title_bar = ApplicationView.GetForCurrentView().TitleBar;
+            title_bar.ButtonBackgroundColor = Colors.Transparent;
+            title_bar.ButtonHoverBackgroundColor = new Color() { R = 0, G = 0, B = 0, A = 40 };
+            title_bar.ButtonPressedBackgroundColor = Colors.Transparent;
+            title_bar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
+
+        public async void ControlSettingsStuff(bool value)
+        {
+            if (value) settings_in.Begin();
+            else settings_out.Begin();
+
+            if (!value) await Task.Delay(TimeSpan.FromSeconds(.3)); // TODO: hacky!
+            tb_settings_backbutton.Visibility = value.Visibility();
+            tb_settings_text.Visibility = value.Visibility();
+        }
+
 
         /// -------------- VIEW MANAGEMENT -------------- ///
 
@@ -130,6 +149,14 @@ namespace WebcamViewerUWP
             foreach (Frame f in loaded_frames) f.Visibility = Visibility.Collapsed;
 
             frame.Visibility = Visibility.Visible;
+        }
+
+        /// ----- ///
+
+        private void tb_settings_backbutton_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchToPage(typeof(Views.Home.HomeView));
+            ControlSettingsStuff(false);
         }
     }
 }
