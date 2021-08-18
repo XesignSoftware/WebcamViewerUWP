@@ -27,6 +27,14 @@ namespace WebcamViewerUWP.Home
         {
             InitializeComponent();
             ViewModel = new HomePageVM();
+
+            ViewModel.OnIsLoadingChanged += ViewModel_OnIsLoadingChanged;
+        }
+
+        private void ViewModel_OnIsLoadingChanged(object sender, bool e)
+        {
+            if (e) progress_show.Begin();
+            else progress_hide.Begin();
         }
 
         private void main_navView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)

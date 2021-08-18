@@ -8,28 +8,50 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d" Background="Transparent">
+    <Page.Resources>
 
-    <muxc:NavigationView x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
-                         ItemInvoked="main_navView_ItemInvoked" MenuItemsSource="{x:Bind Path=ViewModel.Cameras}" >
+        <QuadraticEase x:Name="progress_easing" EasingMode="EaseOut" />
 
-        <muxc:NavigationView.MenuItemTemplate>
-            <DataTemplate x:DataType="model:ImageCamera">
-                <StackPanel>
-                    <TextBlock Text="{x:Bind Path=Name, Mode=OneWay}" />
-                    <TextBlock Text="{x:Bind Path=Type, Mode=OneWay}" FontSize="10" Foreground="{ThemeResource SystemColorGrayTextColor}" />
-                </StackPanel>
-            </DataTemplate>
-        </muxc:NavigationView.MenuItemTemplate>
+        <Storyboard x:Name="progress_show">
+            <DoubleAnimation Storyboard.TargetName="progress_grid" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3" EasingFunction="{StaticResource progress_easing}" />
+        </Storyboard>
+        <Storyboard x:Name="progress_hide">
+            <DoubleAnimation Storyboard.TargetName="progress_grid" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.3" EasingFunction="{StaticResource progress_easing}" />
+        </Storyboard>
+    </Page.Resources>
 
-        <muxc:NavigationView.Content>
-            <Grid>
-                <Image x:Name="image" />
-                <muxc:ProgressRing x:Name="image_progressRing" x:Load="{x:Bind Path=ViewModel.IsLoading, Mode=OneWay}"
-                                   Background="{ThemeResource SystemControlBackgroundListLowBrush}" />
-            </Grid>
-        </muxc:NavigationView.Content>
+    <Grid>
 
-    </muxc:NavigationView>
+        <muxc:NavigationView Style="{StaticResource HomeNavigationViewStyle}" x:Name="main_navView" IsBackButtonVisible="Collapsed" PaneDisplayMode="LeftMinimal"
+                             ItemInvoked="main_navView_ItemInvoked" MenuItemsSource="{x:Bind Path=ViewModel.Cameras}">
+
+            <muxc:NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="model:ImageCamera">
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind Path=Name, Mode=OneWay}" />
+                        <TextBlock Text="{x:Bind Path=Type, Mode=OneWay}" FontSize="10" Foreground="{ThemeResource SystemColorGrayTextColor}" />
+                    </StackPanel>
+                </DataTemplate>
+            </muxc:NavigationView.MenuItemTemplate>
+
+            <muxc:NavigationView.Content>
+                <Grid Margin="0,32,0,0">
+                    <Image x:Name="image" />
+
+                    <Grid x:Name="progress_grid">
+                        <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.68" />
+                        <muxc:ProgressRing x:Name="image_progressRing" x:Load="{x:Bind Path=ViewModel.IsLoading, Mode=OneWay}" 
+                                           Background="{ThemeResource SystemControlBackgroundListLowBrush}" Width="40" Height="40" />
+                    </Grid>
+
+                    <CheckBox IsChecked="{x:Bind Path=ViewModel.IsLoading, Mode=TwoWay}" VerticalAlignment="Bottom" Content="IsLoading" />
+
+                </Grid>
+            </muxc:NavigationView.Content>
+
+        </muxc:NavigationView>
+
+    </Grid>
 
     <!-- <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock FontSize="32">HomePage</TextBlock>

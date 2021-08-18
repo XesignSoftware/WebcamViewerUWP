@@ -17,6 +17,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid x:Name="frame_container" Grid.Row="0" Grid.RowSpan="2"/>
+
         <!-- Titlebar -->
         <Grid>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Padding="14,0">
@@ -25,8 +27,6 @@
                 <TextBlock Text="Webcam Viewer" VerticalAlignment="Center" FontSize="12" />
             </StackPanel>
         </Grid>
-        
-        <Grid x:Name="frame_container" Grid.Row="1"/>
 
     </Grid>
 </Page>
