@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using WebcamViewerUWP.Models;
 using Windows.UI.Xaml;
 
-namespace WebcamViewerUWP.Home
+namespace WebcamViewerUWP.Views.Home
 {
     public class HomeViewVM : ObservableObject
     {
@@ -24,7 +24,5 @@ namespace WebcamViewerUWP.Home
             get => _isLoading;
             set { SetProperty(ref _isLoading, value); OnIsLoadingChanged?.Invoke(this, value); }
         }
-
-
     }
 }

@@ -11,6 +11,7 @@ namespace WebcamViewerUWP.Models
 {
     public interface ICamera
     {
+        int ID { get; set; }
         string Name { get; set; }
         string Url { get; set; }
         CameraType Type { get; set; }
@@ -18,13 +19,15 @@ namespace WebcamViewerUWP.Models
 
     public class ImageCamera : ICamera
     {
-        public ImageCamera(string name, string url = "", CameraType type = CameraType.Image)
+        public ImageCamera(string name, string url = "", int id = -1, CameraType type = CameraType.Image)
         {
             Name = name;
             Url = url;
             Type = type;
+            ID = id;
         }
 
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
         public CameraType Type { get; set; }
@@ -43,7 +46,7 @@ namespace WebcamViewerUWP.Models
             }
             catch (Exception ex) { TextContentDialog("Error", ex.Message); }
 
-            if (data == null) 
+            if (data == null)
                 return null;
 
             using (var stream = new InMemoryRandomAccessStream())

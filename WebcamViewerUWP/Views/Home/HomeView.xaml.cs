@@ -17,15 +17,17 @@ using static ContentDialogHelper;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace WebcamViewerUWP.Home
+namespace WebcamViewerUWP.Views.Home
 {
     public sealed partial class HomeView : Page
     {
+        public static HomeView Instance;
         HomeViewVM ViewModel { get; set; }
 
         public HomeView()
         {
             InitializeComponent();
+            Instance = this;
             ViewModel = new HomeViewVM();
 
             ViewModel.OnIsLoadingChanged += ViewModel_OnIsLoadingChanged;
@@ -37,24 +39,27 @@ namespace WebcamViewerUWP.Home
             else progress_hide.Begin();
         }
 
+        object last_selected_menu_item;
+
         private void main_navView_ItemInvoked(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs args)
         {
-            if (args.IsSettingsInvoked) { Settings(); return; }
+            if (args.IsSettingsInvoked) { Settings(); main_navView.SelectedItem = last_selected_menu_item; return; }
 
+            last_selected_menu_item = args.InvokedItem;
             ICamera c = (ICamera)args.InvokedItem;
             Camera(c);
         }
 
-        public ICamera CurrentCamera { get; set; }
-
         async void Camera(ICamera c)
         {
+            TextContentDialog("Camera() called!");
+
             // TODO: Multiple camera types! We're testing with ImageCamera only for now.
             if (c.Type != CameraType.Image) return;
 
             ViewModel.IsLoading = true;
 
-            CurrentCamera = c;
+            ViewModel.CurrentCamera = c;
 
             ImageCamera ic = (ImageCamera)c;
             image.Source = await ic.GetBitmapImage();
@@ -64,8 +69,10 @@ namespace WebcamViewerUWP.Home
 
         void Settings()
         {
-            TextContentDialog("Settings invoked.");
-            ViewModel.IsLoading = false;
+            // TextContentDialog("Settings invoked.");
+
+            // TODO: View switching
+            MainPage.Instance.SwitchToPage(typeof(Views.Settings.SettingsView));
         }
     }
 }

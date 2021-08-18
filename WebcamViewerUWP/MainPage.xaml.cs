@@ -1,20 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Reflection;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using static ContentDialogHelper;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,9 +18,13 @@ namespace WebcamViewerUWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static MainPage Instance;
+
         public MainPage()
         {
             this.InitializeComponent();
+            Instance = this;
+
             SetupTitlebar();
         }
 
@@ -41,7 +37,7 @@ namespace WebcamViewerUWP
             var parsed = await config_manager.ReadConfigFile("test");
 
             // Load Home:
-            SwitchToPage(new Home.HomeView());
+            SwitchToPage(typeof(Views.Home.HomeView));
         }
 
         /// Titlebar: ///
@@ -63,8 +59,17 @@ namespace WebcamViewerUWP
 
         /// -------------- VIEW MANAGEMENT -------------- ///
 
-        public void SwitchToPage(Page page)
+        public void SwitchToPage(Type type)
         {
+            Page page = null;
+
+            FieldInfo field = type.GetField("Instance", BindingFlags.Public | BindingFlags.Static);
+            if (field != null)
+                page = (Page)field.GetValue(null);
+
+            if (page == null)
+                page = (Page)Activator.CreateInstance(type);
+
             Frame target_frame = GetLoadedFrameForPage(page);
             if (target_frame == null) target_frame = CreateFrameForPage(page);
 
