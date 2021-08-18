@@ -41,7 +41,7 @@ namespace WebcamViewerUWP
             var parsed = await config_manager.ReadConfigFile("test");
 
             // Load Home:
-            SwitchToPage(new Home.HomePage());
+            SwitchToPage(new Home.HomeView());
         }
 
         /// Titlebar: ///

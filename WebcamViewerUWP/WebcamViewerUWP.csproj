@@ -122,8 +122,8 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="ContentDialogHelper.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Views\Home\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
+    <Compile Include="Views\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -131,7 +131,7 @@
     <Compile Include="Models\AppState.cs" />
     <Compile Include="Models\ImageCamera.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Home\HomePageVM.cs" />
+    <Compile Include="Views\Home\HomeViewVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -154,7 +154,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Views\Home\HomePage.xaml">
+    <Page Include="Views\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

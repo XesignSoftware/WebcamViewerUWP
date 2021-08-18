@@ -6,9 +6,9 @@ using Windows.UI.Xaml;
 
 namespace WebcamViewerUWP.Home
 {
-    public class HomePageVM : ObservableObject
+    public class HomeViewVM : ObservableObject
     {
-        public HomePageVM()
+        public HomeViewVM()
         {
             Cameras = AppState.Cameras;
         }

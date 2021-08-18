@@ -19,14 +19,14 @@ using static ContentDialogHelper;
 
 namespace WebcamViewerUWP.Home
 {
-    public sealed partial class HomePage : Page
+    public sealed partial class HomeView : Page
     {
-        HomePageVM ViewModel { get; set; }
+        HomeViewVM ViewModel { get; set; }
 
-        public HomePage()
+        public HomeView()
         {
             InitializeComponent();
-            ViewModel = new HomePageVM();
+            ViewModel = new HomeViewVM();
 
             ViewModel.OnIsLoadingChanged += ViewModel_OnIsLoadingChanged;
         }
