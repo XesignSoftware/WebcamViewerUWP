@@ -1,1 +1,0 @@
-﻿- Make configuration files be able to read lists of webcams, in an interesting syntax format
