@@ -119,7 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppVariablesDynamic.cs" />
+    <Compile Include="AppVariables.cs" />
     <Compile Include="Helpers\CustomTitlebar.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="MainView.xaml.cs">
@@ -127,7 +127,6 @@
     </Compile>
     <Compile Include="Helpers\Popups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="State.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>

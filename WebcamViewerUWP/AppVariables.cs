@@ -1,12 +1,17 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Xaml;
 
 namespace WebcamViewerUWP {
-    public class AppVariablesDynamic : INotifyPropertyChanged {
+    public class AppVariables : INotifyPropertyChanged {
+        public static AppVariables GetInstance() => (AppVariables)Application.Current.Resources["app_variables"];
+
         public event PropertyChangedEventHandler PropertyChanged;
         void NotifyPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool TITLEBAR_AllowCustomTitleBar = true;
 
         private double _system_titlebar_height = 32;
         public double system_titlebar_height {

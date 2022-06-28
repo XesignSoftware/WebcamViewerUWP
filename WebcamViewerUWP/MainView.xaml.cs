@@ -14,12 +14,10 @@ namespace WebcamViewerUWP {
             Instance = this;
         }
 
-        public State state;
+        public static AppVariables app_vars = AppVariables.GetInstance();
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
-            state = State.GetInstance();
-
-            if (state.TITLEBAR_AllowCustomTitleBar) {
+            if (app_vars.TITLEBAR_AllowCustomTitleBar) {
                 CustomTitlebar.setup_custom_titlebar(titlebar_grabbable);
                 CustomTitlebar.titlebar_custom_left = titlebar_custom_left;
                 CustomTitlebar.titlebar_custom_right = titlebar_custom_right;

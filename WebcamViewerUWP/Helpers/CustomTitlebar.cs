@@ -20,13 +20,11 @@ namespace WebcamViewerUWP {
             Instance = this;
         }
 
-        public static State state { get { return State.GetInstance(); } }
-
         public static FrameworkElement titlebar_grabbable; // @ Naming
         public static Grid titlebar_custom_left;
         public static Grid titlebar_custom_right;
 
-        public static AppVariablesDynamic app_vars { get { return (AppVariablesDynamic)Application.Current.Resources["app_variables"]; } }
+        public static AppVariables app_vars = AppVariables.GetInstance();
 
         public static void setup_custom_titlebar(FrameworkElement titlebar_grabbable) {
             // We're storing the titlebar container globally. In the moment, we need it for the LayoutMetricsChanged() event,

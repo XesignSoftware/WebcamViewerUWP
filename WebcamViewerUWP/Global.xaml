@@ -4,6 +4,6 @@
     xmlns:local="using:WebcamViewerUWP">
 
     <local:GridLengthConverter x:Key="gridlength_converter" />
-    <local:AppVariablesDynamic x:Key="app_variables" />
+    <local:AppVariables x:Key="app_variables" />
 
 </ResourceDictionary>
