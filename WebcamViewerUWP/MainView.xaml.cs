@@ -1,7 +1,9 @@
 ﻿using System;
+using Windows.System;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using static WebcamViewerUWP.Logging;
 
 namespace WebcamViewerUWP {
     public sealed partial class MainView : Page {
@@ -14,7 +16,8 @@ namespace WebcamViewerUWP {
             Instance = this;
         }
 
-        public static AppVariables app_vars = AppVariables.GetInstance();
+        AppVariables app_vars = AppVariables.GetInstance();
+        DebugConsole console { get { return DebugConsole.GetInstance(); } }
 
         private void Page_Loaded(object sender, RoutedEventArgs e) {
             if (app_vars.TITLEBAR_AllowCustomTitleBar) {
@@ -31,6 +34,8 @@ namespace WebcamViewerUWP {
             }
 
             change_view(typeof(Views.TestView));
+
+            log("[mainview] Application loaded.");
         }
 
         View current_view = null;
@@ -58,7 +63,6 @@ namespace WebcamViewerUWP {
 
             current_view?.view_requested();
         }
-
         public void change_view(string view_name) {
             string view_type_name = $"{nameof(WebcamViewerUWP)}.Views.{view_name}";
             Type view_type = Type.GetType(view_type_name);
@@ -67,6 +71,11 @@ namespace WebcamViewerUWP {
                 return;
             }
             view_frame.Navigate(view_type);
+        }
+
+        private void Page_PreviewKeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e) {
+            if (e.Key == VirtualKey.Number0) console.toggle();
+            if (e.Key == VirtualKey.Escape && console.is_open()) console.close();
         }
     }
 }

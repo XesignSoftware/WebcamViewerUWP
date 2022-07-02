@@ -120,13 +120,20 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppVariables.cs" />
+    <Compile Include="Configuration\ConfigFile.cs" />
+    <Compile Include="Controls\DebugConsole.xaml.cs">
+      <DependentUpon>DebugConsole.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\NegativeValueConverter.cs" />
     <Compile Include="Helpers\CustomTitlebar.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
+    <Compile Include="Helpers\Logging.cs" />
     <Compile Include="MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Popups.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserVariables.cs" />
     <Compile Include="Views\View.cs" />
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -155,6 +162,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DebugConsole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Global.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

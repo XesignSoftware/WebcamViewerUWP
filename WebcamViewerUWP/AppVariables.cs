@@ -4,11 +4,24 @@ using Windows.UI.Xaml;
 
 namespace WebcamViewerUWP {
     public class AppVariables : INotifyPropertyChanged {
+        public static implicit operator bool(AppVariables view) => view != null;
         public static AppVariables GetInstance() => (AppVariables)Application.Current.Resources["app_variables"];
 
         public event PropertyChangedEventHandler PropertyChanged;
         void NotifyPropertyChanged([CallerMemberName] string propertyName = null) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private string _console_text;
+        public string console_text {
+            get { return _console_text; }
+            set { _console_text = value; NotifyPropertyChanged(); }
+        }
+
+        private int _console_height = 530;
+        public int console_height {
+            get { return _console_height; }
+            set { _console_height = value; NotifyPropertyChanged(); }
         }
 
         public bool TITLEBAR_AllowCustomTitleBar = true;

@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource BlackOrWhite}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -17,12 +17,18 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="1">
+
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="&#xf133;"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="Segoe Fluent Icons" FontSize="200" Margin="0,0,0,60" />
+
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">(Test view)</TextBlock>
                 <Button HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">Go to Home view</Button>
+                <Button x:Name="config_test_button" HorizontalAlignment="Center" VerticalAlignment="Center" Click="config_test_button_Click">Config test</Button>
             </StackPanel>
         </Grid>
 
     </Grid>
-        
+
 </project:View>

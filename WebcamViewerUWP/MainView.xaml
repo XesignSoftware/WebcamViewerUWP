@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    Loaded="Page_Loaded"
+    Loaded="Page_Loaded" PreviewKeyDown="Page_PreviewKeyDown"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
     <Grid>
@@ -21,8 +21,10 @@
             <TextBlock Text="(Application)" Margin="20,18,0,0" />
         </StackPanel>
 
-
         <Frame x:Name="view_frame" Grid.Row="1" />
+
+        <!-- Console -->
+        <local:DebugConsole x:Name="debug_console" Grid.RowSpan="2" d:Visibility="Collapsed" />
 
         <Grid x:Name="titlebar" Background="Transparent" 
               VerticalAlignment="Top">

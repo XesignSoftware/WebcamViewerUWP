@@ -13,6 +13,7 @@
         <controls:XamlControlsResources>
             <controls:XamlControlsResources.MergedDictionaries>
                 <ResourceDictionary Source="Global.xaml" />
+                <ResourceDictionary Source="Colors.xaml" />
             </controls:XamlControlsResources.MergedDictionaries>
 
         </controls:XamlControlsResources>
