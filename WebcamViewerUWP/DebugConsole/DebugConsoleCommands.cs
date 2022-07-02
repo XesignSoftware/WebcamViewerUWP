@@ -10,6 +10,7 @@ namespace WebcamViewerUWP {
         public string[] aliases;
         public DebugConsoleCommandType type;
 
+        public bool close_console_on_invoke = false;
         public string help_text;
 
         // for Function-type commands:
@@ -55,15 +56,15 @@ namespace WebcamViewerUWP {
         public Dictionary<string, DebugConsoleCommand> commands = new Dictionary<string, DebugConsoleCommand>();
 
         // Function-type commands:
-        public bool register_command(Action action_empty, string help_text = "", params string[] aliases) {
+        public DebugConsoleCommand register_command(Action action_empty, string help_text = null, params string[] aliases) {
             if (commands.ContainsKey(action_empty.Method.Name)) {
                 log($"Command '{action_empty.Method.Name}' is already registered.");
-                return false;
+                return null;
             }
             foreach (string s in aliases) {
                 if (commands.ContainsKey(s)) {
                     log($"Command '{s}' is already registered.");
-                    return false;
+                    return null;
                 }
             }
 
@@ -76,18 +77,18 @@ namespace WebcamViewerUWP {
             commands.Add(cmd.name, cmd);
             foreach (string s in aliases) commands.Add(s, cmd);
 
-            return true;
+            return cmd;
         }
         // TODO: Code duplication!!!
-        public bool register_command(Action<string[]> action_params, string help_text = "", params string[] aliases) {
+        public DebugConsoleCommand register_command(Action<string[]> action_params, string help_text = null, params string[] aliases) {
             if (commands.ContainsKey(action_params.Method.Name)) {
                 log($"Command '{action_params.Method.Name}' is already registered.");
-                return false;
+                return null;
             }
             foreach (string s in aliases) {
                 if (commands.ContainsKey(s)) {
                     log($"Command '{s}' is already registered.");
-                    return false;
+                    return null;
                 }
             }
 
@@ -100,7 +101,7 @@ namespace WebcamViewerUWP {
             commands.Add(cmd.name, cmd);
             foreach (string s in aliases) commands.Add(s, cmd);
 
-            return true;
+            return cmd;
         }
 
         // Variable-type commands:
@@ -108,17 +109,17 @@ namespace WebcamViewerUWP {
             typeof(int), typeof(float), typeof(double),
             typeof(string), typeof(bool)
         };
-        public bool register_command<T>(ref T obj, string help_text = "", params string[] aliases) {
+        public DebugConsoleCommand register_command<T>(ref T obj, string help_text = null, params string[] aliases) {
             string obj_name = obj.ToString();
 
             if (commands.ContainsKey(obj_name)) {
                 log($"Command '{obj_name}' is already registered.");
-                return false;
+                return null;
             }
             foreach (string s in aliases) {
                 if (commands.ContainsKey(s)) {
                     log($"Command '{s}' is already registered.");
-                    return false;
+                    return null;
                 }
             }
 
@@ -127,7 +128,7 @@ namespace WebcamViewerUWP {
             foreach (Type t in allowed_types) if (obj_type == t) success = true;
             if (!success) {
                 log($"Could not register command for object '{obj_name}' - type '{obj_type.Name}' is not supported.");
-                return false;
+                return null;
             }
 
             DebugConsoleCommand<T> cmd = new DebugConsoleCommand<T>();
@@ -142,7 +143,7 @@ namespace WebcamViewerUWP {
             commands.Add(cmd.name, cmd);
             foreach (string s in aliases) commands.Add(s, cmd);
 
-            return true;
+            return cmd;
         }
     }
 
@@ -155,7 +156,7 @@ namespace WebcamViewerUWP {
         void help() {
             log("[help] Listing all commands...");
             foreach (DebugConsoleCommand cmd in commands.Values) {
-                log($"  - {cmd.name}: {(cmd.help_text == null ? "no help text" : cmd.help_text)}");
+                log($"  - {cmd.name}{(cmd.help_text == null ? null : $" - {cmd.help_text}")}");
             }
         }
     }
@@ -188,6 +189,8 @@ namespace WebcamViewerUWP {
                 if (args == null) log($"Value for variable '{cmd.name}': {cmd.obj_ref_boxed.get()}");
                 else log("TODO TODO TODO");
             }
+
+            if (cmd.close_console_on_invoke) DebugConsole.get_instance().close();
 
             return true;
         }

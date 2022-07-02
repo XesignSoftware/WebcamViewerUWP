@@ -10,7 +10,7 @@ namespace WebcamViewerUWP {
         public static implicit operator bool(DebugConsole console) => console!= null;
 
         static DebugConsole instance;
-        public static DebugConsole GetInstance() => instance;
+        public static DebugConsole get_instance() => instance;
         public DebugConsole() {
             this.InitializeComponent();
             if (!instance) return;
