@@ -5,5 +5,6 @@
 
     <local:GridLengthConverter x:Key="gridlength_converter" />
     <local:AppVariables x:Key="app_variables" />
+    <local:UserVariables x:Key="user_variables" />
 
 </ResourceDictionary>

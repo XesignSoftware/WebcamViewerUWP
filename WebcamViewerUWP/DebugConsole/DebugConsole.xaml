@@ -60,7 +60,8 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="console_textbox" />
+            <TextBox x:Name="input_field" 
+                     KeyDown="input_field_KeyDown" TextChanged="input_field_TextChanged" />
             <Button x:Name="submit_button" Content="->" Grid.Column="1" Click="submit_button_Click" />
         </Grid>
     </Grid>

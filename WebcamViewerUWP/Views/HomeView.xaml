@@ -6,7 +6,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
     xmlns:local="using:WebcamViewerUWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:controls="using:WebcamViewerUWP.Controls"
     mc:Ignorable="d"
     Background="Transparent"
     Loaded="Page_Loaded" >
@@ -17,33 +17,23 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <!-- Content grid -->
         <Grid Grid.Row="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">(Home view)</TextBlock>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8,0,0" MaxWidth="800" TextWrapping="Wrap">
-                    The Home view is supposed to have multiple custom titlebar buttons on both the left and right side.<LineBreak />Ensure that this is working, then navigate away to see them fade away with an animation.<LineBreak/><LineBreak/>The right side of the titlebar has a larger space being reserved by the system for the legacy Win8 fullscreen button.<LineBreak/>While we can extend into that region, it will not be interactable by the user.
-                </TextBlock>
-                <Button Click="Button_Click" HorizontalAlignment="Center" Margin="0,18,0,0">Go to Test view</Button>
-            </StackPanel>
+            <Image Source="/Assets/example-image.jpg" Stretch="UniformToFill" />
         </Grid>
+        
+        <!-- Menu -->
+        <controls:HomeMenu Grid.RowSpan="2" />
 
         <Grid x:Name="titlebar" Grid.Row="0" Background="#301F40bb" >
             <Grid x:Name="titlebar_left" >
                 <StackPanel Orientation="Horizontal">
                     <Button FontFamily="Segoe Fluent Icons" Content="&#xe700;" />
-                    <Button Content="Custom titlebar content (left)" Margin="10,0,0,0" />
                 </StackPanel>
             </Grid>
 
             <Grid x:Name="titlebar_right" HorizontalAlignment="Right" >
-                <StackPanel Orientation="Horizontal">
-                <Button Content="Custom titlebar content (right)" />
-                    <StackPanel Orientation="Horizontal" Visibility="Collapsed">
-                    <Rectangle Width="35" Fill="Red" HorizontalAlignment="Right" />
-                    <Rectangle Width="35" Fill="Green" HorizontalAlignment="Right" />
-                    <Rectangle Width="35" Fill="Yellow" HorizontalAlignment="Right" Margin="0,0,-40,0" />
-                    </StackPanel>
-                </StackPanel>
+                <Button Click="Button_Click">Go to Test view</Button>
             </Grid>
         </Grid>
         

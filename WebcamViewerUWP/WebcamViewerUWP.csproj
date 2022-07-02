@@ -121,10 +121,14 @@
     </Compile>
     <Compile Include="AppVariables.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
-    <Compile Include="Controls\DebugConsole.xaml.cs">
+    <Compile Include="DebugConsole\DebugConsole.xaml.cs">
       <DependentUpon>DebugConsole.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HomeMenu.xaml.cs">
+      <DependentUpon>HomeMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\NegativeValueConverter.cs" />
+    <Compile Include="DebugConsole\DebugConsoleCommands.cs" />
     <Compile Include="Helpers\CustomTitlebar.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Helpers\Logging.cs" />
@@ -141,6 +145,7 @@
     <Compile Include="Views\TestView.xaml.cs">
       <DependentUpon>TestView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Webcam.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -148,6 +153,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\example-image.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -166,7 +172,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DebugConsole.xaml">
+    <Page Include="DebugConsole\DebugConsole.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HomeMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

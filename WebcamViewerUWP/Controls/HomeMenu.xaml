@@ -1,0 +1,38 @@
+﻿<UserControl
+    x:Class="WebcamViewerUWP.Controls.HomeMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local="using:WebcamViewerUWP.Controls"
+    xmlns:webcamvieweruwp="using:WebcamViewerUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d"
+    Width="360" d:Height="600" HorizontalAlignment="Left">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="webcam_menu_template" x:DataType="webcamvieweruwp:Webcam">
+            <TextBlock Text="{x:Bind name}" d:Text="Camera name" x:Phase="1" />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{ThemeResource SystemControlAcrylicElementBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{Binding total_titlebar_height, Source={StaticResource app_variables}, Converter={StaticResource gridlength_converter}}"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="0.45" Grid.RowSpan="2" />
+
+        <ListView x:Name="listview" Grid.Row="1" SelectionMode="Single"
+                  ItemsSource="{Binding Webcams, Source={StaticResource user_variables}}"
+                  ItemTemplate="{StaticResource webcam_menu_template}" SelectionChanged="listview_SelectionChanged">
+            
+        </ListView>
+
+        <Button Content="Settings" Style="{ThemeResource AccentButtonStyle}" Grid.Row="2"
+                    HorizontalAlignment="Stretch"/>
+    </Grid>
+    
+</UserControl>
