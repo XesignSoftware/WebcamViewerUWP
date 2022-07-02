@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
@@ -14,11 +15,9 @@ namespace WebcamViewerUWP {
         }
 
         private List<Webcam> _webcams = new List<Webcam>() {
-            new Webcam("Test webcam #1", null, "Test owner", "Test location"),
-            new Webcam("Test webcam #2", null, "Test owner", "Test location"),
-            new Webcam("Test webcam #3", null, "Test owner", "Test location"),
-            new Webcam("Test webcam #4", null, "Test owner", "Test location"),
-            new Webcam("Test webcam #5", null, "Test owner", "Test location"),
+            new Webcam("Test webcam #1", new Uri("http://gw.msumi.sk:8001/jpg/1/image.jpg"), "Test owner", "Test location"),
+            new Webcam("Test webcam #2", new Uri("http://funsat.sk/meteo/webcam/funsat1.jpg"), "Test owner", "Test location"),
+            new Webcam("Test webcam #3", new Uri("http://funsat.sk/meteo/webcam/funsat2.jpg"), "Test owner", "Test location"),
         };
         public  List<Webcam>  Webcams {
             get { return _webcams; }

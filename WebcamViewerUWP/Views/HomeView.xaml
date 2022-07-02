@@ -11,7 +11,29 @@
     Background="Transparent"
     Loaded="Page_Loaded" >
 
-    <Grid>
+    <project:View.Resources>
+        <Storyboard x:Key="progress_ui_show">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="progress_ui" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="progress_ui" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.0000000" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="1" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="progress_ui_hide">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="progress_ui" Storyboard.TargetProperty="Opacity">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.0000000" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="progress_ui" Storyboard.TargetProperty="(UIElement.Visibility)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:00.0000000" Value="Visible" />
+                <DiscreteObjectKeyFrame KeyTime="00:00:00.3000000" Value="Collapsed" />
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </project:View.Resources>
+
+<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding total_titlebar_height, Source={StaticResource app_variables}, Converter={StaticResource gridlength_converter}}" />
             <RowDefinition />
@@ -19,11 +41,16 @@
 
         <!-- Content grid -->
         <Grid Grid.Row="1">
-            <Image Source="/Assets/example-image.jpg" Stretch="UniformToFill" />
+            <Image x:Name="webcam_image" Source="/Assets/example-image.jpg" Stretch="Uniform" />
+
+            <Grid x:Name="progress_ui" Visibility="Collapsed" d:Visibility="Visible">
+                <Rectangle Fill="{ThemeResource BlackOrWhite}" Opacity="0.65" />
+                <muxc:ProgressRing />
+            </Grid>
         </Grid>
         
         <!-- Menu -->
-        <controls:HomeMenu Grid.RowSpan="2" />
+        <controls:HomeMenu Grid.RowSpan="2" OnEntrySelected="HomeMenu_OnEntrySelected"/>
 
         <Grid x:Name="titlebar" Grid.Row="0" Background="#301F40bb" >
             <Grid x:Name="titlebar_left" >

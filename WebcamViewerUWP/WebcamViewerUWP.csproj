@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Converters\NegativeValueConverter.cs" />
     <Compile Include="DebugConsole\DebugConsoleCommands.cs" />
+    <Compile Include="Engines\ImageCamera.cs" />
     <Compile Include="Helpers\CustomTitlebar.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Helpers\Logging.cs" />

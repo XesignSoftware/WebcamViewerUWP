@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 
 namespace WebcamViewerUWP.Controls {
@@ -6,6 +7,8 @@ namespace WebcamViewerUWP.Controls {
         public HomeMenu() {
             this.InitializeComponent();
         }
+
+        public event EventHandler<Webcam> OnEntrySelected;
 
         private void listview_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             // Since this is a Single-selection mode list, we only ever want to get one argument from
@@ -16,6 +19,7 @@ namespace WebcamViewerUWP.Controls {
             Debug.Assert(e.AddedItems[0].GetType() == typeof(Webcam));
 
             Webcam w = (Webcam)e.AddedItems[0];
+            OnEntrySelected?.Invoke(this, w);
         }
     }
 }
